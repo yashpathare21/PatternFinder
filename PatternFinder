@@ -1,0 +1,33 @@
+# IMPORTING VARIABLES
+import re
+import os
+
+# FILE LOCATION
+folder_dir = "C:\\Users\\admin\\OneDrive\\Desktop\\extracted_content" 
+
+# THIS WILL CONTAIN RESULTS OF THE WALK SEARCH
+results = []
+
+# THIS search() WILL OPEN THE FILE AND FIND GIVEN PATTERN IN IT
+def search(file,pattern=r"\d{3}-\d{3}-\d{4}"):
+    f = open(file,"r")
+    text = f.read()
+    
+    if re.findall(pattern,text):
+        return re.findall(pattern,text)
+    else:
+        return "Nothing Found"
+
+# THIS FOR LOOP WILL GET FILE_DIR OF ALL SUB_FOLDERS AND FILES OF THE GIVEN MAIN FOLDER  
+for folder,sub_folders,files in os.walk(folder_dir):   
+    for f in files:
+        full_path = folder + "\\" + f  
+        
+        # IT WILL APPEND ALL PATTERN RESEARCHES OF FOUND FILE PATHS TO 'results' VARIABLE
+        results.append(search(full_path))
+    
+    
+# THIS WILL 'ONLY' RETURN THE FOUND PATTERN 
+for x in results:
+    if x != "Nothing Found":
+        print(x)
